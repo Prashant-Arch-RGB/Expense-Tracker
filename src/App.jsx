@@ -58,15 +58,7 @@ export default function App() {
     const month = storage.getSelectedMonth() || currentYearMonth();
     const cur   = storage.getCurrency();
 
-    if (txns.length === 0) {
-      // First launch — load sample data
-      const sample = getSampleData();
-      storage.saveTransactions(sample);
-      setTransactions(sample);
-      addToast('Welcome! Sample data loaded. Start tracking your expenses! 🎉', 'success');
-    } else {
-      setTransactions(txns);
-    }
+    setTransactions(txns);
 
     if (bgt) setBudget(bgt);
     else { storage.saveBudget(10000); setBudget(10000); }
@@ -153,6 +145,17 @@ export default function App() {
     addToast('All data cleared.', 'warning');
   }, [addToast]);
 
+  const handleLoadSample = useCallback(() => {
+    const sample = getSampleData();
+    storage.clearAll();
+    storage.saveTransactions(sample);
+    storage.saveBudget(10000);
+    setTransactions(sample);
+    setBudget(10000);
+    setSelectedMonth(currentYearMonth());
+    addToast('Sample data loaded! 120 transactions across 12 months. 🎉', 'success');
+  }, [addToast]);
+
   const filteredTxns = filterByMonth(transactions, selectedMonth);
 
   // --- Currency change with live conversion ---
@@ -237,6 +240,7 @@ export default function App() {
               onThemeToggle={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
               onImportCSV={handleImportCSV}
               onClearAll={handleClearAll}
+              onLoadSample={handleLoadSample}
               transactions={transactions}
               currency={currency}
               onCurrencyChange={handleCurrencyChange}

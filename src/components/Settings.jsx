@@ -2,7 +2,7 @@
 // Settings.jsx — App settings page
 // ============================================================
 import { useRef, useState } from 'react';
-import { Download, Upload } from 'lucide-react';
+import { Download, Upload, FlaskConical } from 'lucide-react';
 
 const CURRENCIES = [
   { symbol: '₹', label: 'Indian Rupee (₹)' },
@@ -19,7 +19,7 @@ const SYMBOL_TO_CODE = {
 // All known currency symbols (for stripping from amount strings)
 const ALL_SYMBOLS = Object.keys(SYMBOL_TO_CODE);
 
-export default function Settings({ theme, onThemeToggle, onImportCSV, onClearAll, transactions, currency, onCurrencyChange }) {
+export default function Settings({ theme, onThemeToggle, onImportCSV, onClearAll, onLoadSample, transactions, currency, onCurrencyChange }) {
   const fileInputRef = useRef(null);
   const [importing, setImporting] = useState(false);
   const [converting, setConverting] = useState(false);
@@ -42,6 +42,12 @@ export default function Settings({ theme, onThemeToggle, onImportCSV, onClearAll
   function handleClearAll() {
     if (window.confirm('⚠️ This will permanently delete ALL transactions and reset your budget. Are you sure?')) {
       onClearAll();
+    }
+  }
+
+  function handleLoadSample() {
+    if (window.confirm('This will clear all existing data and load 120 sample transactions across 12 months. Continue?')) {
+      onLoadSample();
     }
   }
 
@@ -195,6 +201,11 @@ export default function Settings({ theme, onThemeToggle, onImportCSV, onClearAll
           </SettingsRow>
           <SettingsRow label="Export Transactions" desc="Download all data as CSV">
             <button className="btn btn-outline btn-sm" onClick={exportCSV}><Download size={13}/> Export</button>
+          </SettingsRow>
+          <SettingsRow label="Load Sample Data" desc="Replace all data with 120 realistic demo transactions across 12 months">
+            <button className="btn btn-outline btn-sm" onClick={handleLoadSample}>
+              <FlaskConical size={13}/> Load Sample
+            </button>
           </SettingsRow>
           <SettingsRow label="Clear All Data" desc="Delete all transactions and reset budget">
             <button className="btn btn-danger btn-sm" onClick={handleClearAll}>Clear All</button>
