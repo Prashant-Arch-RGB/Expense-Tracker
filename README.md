@@ -191,38 +191,29 @@ No build step, no Node.js required — just open `index.html` in a browser.
 
 ## 🚀 Installation
 
-### Option A: No Setup — Open Directly in Browser (Recommended for Demo)
+NodeJS: https://nodejs.org/en/download/current
+**Prerequisites:** Node.js 18+ and npm
 
 ```bash
 # Clone the repo
 git clone https://github.com/your-username/expense-tracker.git
 cd expense-tracker
 
-# Simply open the file:
-open index.html
-# OR double-click index.html in your file explorer
-```
-
-That's it. No Node.js, no npm, no build step.
-
----
-
-### Option B: React + Vite (For Development)
-
-**Prerequisites:** Node.js 18+ and npm
-
-```bash
-cd expense-tracker/react-src
-
 # Install dependencies
 npm install
+OR
+Open install.bat
 
 # Start development server
 npm run dev
+OR
+Open run.bat
 
 # Build for production
 npm run build
+
 ```
+
 
 Open `http://localhost:5173` in your browser.
 
