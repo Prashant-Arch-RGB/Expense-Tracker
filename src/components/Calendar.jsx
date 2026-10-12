@@ -1,7 +1,8 @@
 // ============================================================
 // Calendar.jsx — Daily & Monthly spend calendar + Period Calculator
 // ============================================================
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { Calendar as CalendarIcon, Calculator } from 'lucide-react';
 import { formatINR, totalSpent } from '../utils/calculations.js';
 
 // ── helpers ──────────────────────────────────────────────────
@@ -44,6 +45,10 @@ function MonthView({ year, month, dailyMap, currency, onDayClick, selectedDay })
   for (let i = 0; i < start; i++) cells.push(null);
   for (let d = 1; d <= days; d++) cells.push(d);
 
+  // Compute today's key once using local date parts (avoids UTC offset issues)
+  const _now = new Date();
+  const todayKey = `${_now.getFullYear()}-${String(_now.getMonth() + 1).padStart(2, '0')}-${String(_now.getDate()).padStart(2, '0')}`;
+
   return (
     <div className="cal-grid">
       {DAYS.map(d => <div key={d} className="cal-day-header">{d}</div>)}
@@ -51,7 +56,7 @@ function MonthView({ year, month, dailyMap, currency, onDayClick, selectedDay })
         if (day === null) return <div key={`e-${idx}`} className="cal-cell cal-cell--empty" />;
         const key    = isoDate(year, month, day);
         const amount = dailyMap[key] || 0;
-        const isToday = key === new Date().toISOString().slice(0, 10);
+        const isToday = key === todayKey;
         const isSelected = key === selectedDay;
         return (
           <div
@@ -129,15 +134,7 @@ function PeriodCalculator({ transactions, currency }) {
   return (
     <div className="card period-calc">
       <h3 className="period-calc-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="14" x2="8" y2="14" strokeLinecap="round" strokeWidth="3"/>
-          <line x1="12" y1="14" x2="12" y2="14" strokeLinecap="round" strokeWidth="3"/>
-          <line x1="16" y1="14" x2="16" y2="14" strokeLinecap="round" strokeWidth="3"/>
-        </svg>
+        <Calculator size={16}/>
         Period Calculator
       </h3>
       <p className="period-calc-desc">Calculate total spend between any two dates</p>
@@ -229,10 +226,22 @@ function DetailPanel({ label, transactions, currency, onClose }) {
 
 // ── Main Calendar Component ───────────────────────────────────
 export default function Calendar({ transactions, currency }) {
-  const today = new Date();
+  const getToday = () => new Date();
   const [view, setView]     = useState('month'); // 'month' | 'year'
-  const [year, setYear]     = useState(today.getFullYear());
-  const [month, setMonth]   = useState(today.getMonth());
+  const [year, setYear]     = useState(() => getToday().getFullYear());
+  const [month, setMonth]   = useState(() => getToday().getMonth());
+
+  // Re-sync year/month to today if the date changes while app is open
+  useEffect(() => {
+    const tick = () => {
+      const now = getToday();
+      setYear(now.getFullYear());
+      setMonth(now.getMonth());
+    };
+    // Check every minute
+    const id = setInterval(tick, 60_000);
+    return () => clearInterval(id);
+  }, []);
   const [selected, setSelected] = useState(null); // { key, txns, label }
 
   // Build daily map for current month
@@ -305,7 +314,7 @@ export default function Calendar({ transactions, currency }) {
   return (
     <div className="calendar-page">
       <div className="section-header">
-        <h2>📅 Calendar</h2>
+        <h2><CalendarIcon size={20} style={{ verticalAlign: 'middle', marginRight: 6 }}/>Calendar</h2>
       </div>
 
       <div className="cal-main-area">

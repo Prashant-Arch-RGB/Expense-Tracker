@@ -223,7 +223,7 @@ tr:hover td { background: var(--surface2); }
 .cal-day-num { font-size: 12px; font-weight: 700; color: var(--text2); line-height: 1; }
 .cal-amount { font-size: 11px; font-weight: 600; color: var(--text); margin-top: 6px; word-break: break-all; }
 .cal-zero { font-size: 12px; color: var(--text3); margin-top: 6px; }
-.cal-today .cal-day-num { background: var(--primary); color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.cal-today .cal-day-num { background: var(--primary); color: #fff; width: 26px; height: 26px; font-size: 13px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 3px rgba(99,102,241,.25); }
 .cal-selected { border-color: var(--primary) !important; box-shadow: 0 0 0 2px rgba(99,102,241,.25); }
 
 /* Intensity shading */

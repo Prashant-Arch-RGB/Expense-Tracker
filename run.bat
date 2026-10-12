@@ -1,5 +1,5 @@
 @echo off
-echo Expense-Tracker...
+echo Starting...
 cd /d "%~dp0"
 npm run dev
 pause

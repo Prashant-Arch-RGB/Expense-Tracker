@@ -2,6 +2,7 @@
 // BudgetCard.jsx — Budget setting + progress + warnings
 // ============================================================
 import { useState } from 'react';
+import { CheckCircle2, AlertTriangle, AlertOctagon, Zap } from 'lucide-react';
 import { totalSpent, remaining, usagePct, formatINR } from '../utils/calculations.js';
 
 export default function BudgetCard({ filteredTxns, budget, onSave, currency = '₹' }) {
@@ -19,19 +20,24 @@ export default function BudgetCard({ filteredTxns, budget, onSave, currency = '�
   const barColor = pct >= 100 ? '#ef4444' : pct >= 90 ? '#f59e0b' : pct >= 70 ? '#f97316' : '#22c55e';
 
   let alertStyle = { background: 'var(--success-light)', color: 'var(--success)' };
-  let alertText  = '✅ You\'re within your budget. Keep it up!';
+  let alertIcon  = <CheckCircle2 size={14} style={{ flexShrink: 0 }}/>;
+  let alertText  = "You're within your budget. Keep it up!";
   if (!budget) {
     alertStyle = { background: 'var(--surface2)', color: 'var(--text2)' };
+    alertIcon  = null;
     alertText  = 'Set a monthly budget above to get started.';
   } else if (pct > 100) {
     alertStyle = { background: 'var(--danger-light)', color: 'var(--danger)' };
-    alertText  = '🚨 You have exceeded your monthly budget!';
+    alertIcon  = <AlertOctagon size={14} style={{ flexShrink: 0 }}/>;
+    alertText  = 'You have exceeded your monthly budget!';
   } else if (pct >= 90) {
     alertStyle = { background: 'var(--danger-light)', color: 'var(--danger)' };
-    alertText  = '⚠️ You are close to reaching your budget.';
+    alertIcon  = <AlertTriangle size={14} style={{ flexShrink: 0 }}/>;
+    alertText  = 'You are close to reaching your budget.';
   } else if (pct >= 70) {
     alertStyle = { background: 'var(--warning-light)', color: 'var(--warning)' };
-    alertText  = "⚡ You're approaching your monthly budget.";
+    alertIcon  = <Zap size={14} style={{ flexShrink: 0 }}/>;
+    alertText  = "You're approaching your monthly budget.";
   }
 
   return (
@@ -71,7 +77,9 @@ export default function BudgetCard({ filteredTxns, budget, onSave, currency = '�
             <div className="progress">
               <div className="progress-bar" style={{ width: budget ? Math.min(pct, 100) + '%' : '0%', background: barColor }}/>
             </div>
-            <div className="budget-alert" style={alertStyle}>{alertText}</div>
+            <div className="budget-alert" style={{ ...alertStyle, display: 'flex', alignItems: 'center', gap: 6 }}>
+              {alertIcon}{alertText}
+            </div>
           </div>
         </div>
       </div>

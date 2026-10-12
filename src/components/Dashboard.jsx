@@ -85,16 +85,16 @@ export default function Dashboard({ filteredTxns, budget, selectedMonth, onEdit,
 
       {/* Stat cards */}
       <div className="card-grid">
-        <StatCard icon={<TrendingDown size={20} color="#ef4444"/>} iconBg="#fee2e2" label="Total Spent" value={formatINR(spent, currency)} sub={monthLabel}/>
-        <StatCard icon={<Wallet size={20} color="#3b82f6"/>} iconBg="#dbeafe" label="Monthly Budget" value={budget ? formatINR(budget, currency) : '—'} sub="Set in Budget section"/>
-        <StatCard icon={<Shield size={20} color="#22c55e"/>} iconBg="#d1fae5" label="Remaining" value={budget ? formatINR(rem, currency) : '—'} valueColor={rem < 0 ? 'var(--danger)' : 'var(--success)'} sub="Budget remaining"/>
-        <StatCard icon={<BarChart3 size={20} color="#8b5cf6"/>} iconBg="#ede9fe" label="Budget Used" value={budget ? pct + '%' : '—'}>
+        <StatCard icon={<TrendingDown size={20}/>} label="Total Spent" value={formatINR(spent, currency)} sub={monthLabel}/>
+        <StatCard icon={<Wallet size={20}/>} label="Monthly Budget" value={budget ? formatINR(budget, currency) : '—'} sub="Set in Budget section"/>
+        <StatCard icon={<Shield size={20}/>} label="Remaining" value={budget ? formatINR(rem, currency) : '—'} valueColor={rem < 0 ? 'var(--danger)' : 'var(--success)'} sub="Budget remaining"/>
+        <StatCard icon={<BarChart3 size={20}/>} label="Budget Used" value={budget ? pct + '%' : '—'}>
           <div className="progress" style={{ marginTop: 8 }}>
             <div className="progress-bar" style={{ width: Math.min(pct, 100) + '%', background: progressColor }}/>
           </div>
         </StatCard>
-        <StatCard icon={<Star size={20} color="#f59e0b"/>} iconBg="#fef3c7" label="Top Category" value={topCat || '—'} valueStyle={{ fontSize: 16 }} sub={topCat ? formatINR(topAmt, currency) : ''}/>
-        <StatCard icon={<Hash size={20} color="#16a34a"/>} iconBg="#f0fdf4" label="Transactions" value={filteredTxns.length} sub="This month"/>
+        <StatCard icon={<Star size={20}/>} label="Top Category" value={topCat || '—'} valueStyle={{ fontSize: 16 }} sub={topCat ? formatINR(topAmt, currency) : ''}/>
+        <StatCard icon={<Hash size={20}/>} label="Transactions" value={filteredTxns.length} sub="This month"/>
       </div>
 
       {/* Charts */}
@@ -144,10 +144,10 @@ export default function Dashboard({ filteredTxns, budget, selectedMonth, onEdit,
   );
 }
 
-function StatCard({ icon, iconBg, label, value, valueColor, valueStyle = {}, sub, children }) {
+function StatCard({ icon, label, value, valueColor, valueStyle = {}, sub, children }) {
   return (
     <div className="stat-card">
-      <div className="stat-icon" style={{ background: iconBg }}>{icon}</div>
+      <div className="stat-icon">{icon}</div>
       <div className="stat-label">{label}</div>
       <div className="stat-value" style={{ color: valueColor, ...valueStyle }}>{value}</div>
       {sub && <div className="stat-sub">{sub}</div>}

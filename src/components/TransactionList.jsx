@@ -2,7 +2,7 @@
 // TransactionList.jsx — Searchable, filterable, sortable table
 // ============================================================
 import { useState } from 'react';
-import { Edit2, Trash2, Download } from 'lucide-react';
+import { Edit2, Trash2, Download, Search } from 'lucide-react';
 import { formatINR, formatDateDisplay, CATEGORIES, PAYMENT_METHODS } from '../utils/calculations.js';
 
 const CAT_CLASS = {
@@ -59,7 +59,10 @@ export default function TransactionList({ filteredTxns, onEdit, onDelete, curren
 
       {/* Filters */}
       <div className="filter-bar">
-        <input className="form-control" placeholder="🔍 Search description, category, method..." value={search} onChange={e => setSearch(e.target.value)}/>
+        <div style={{ position: 'relative', flex: 1 }}>
+          <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)', pointerEvents: 'none' }}/>
+          <input className="form-control" style={{ paddingLeft: 30 }} placeholder="Search description, category, method..." value={search} onChange={e => setSearch(e.target.value)}/>
+        </div>
         <select className="form-control" value={catFilter} onChange={e => setCatFilter(e.target.value)}>
           <option value="">All Categories</option>
           {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
