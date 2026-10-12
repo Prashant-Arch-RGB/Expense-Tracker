@@ -1,5 +1,5 @@
 @echo off
-echo JEE rank Predictor...
+echo Expense-Tracker Installing...
 cd /d "%~dp0"
 npm install
 pause
