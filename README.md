@@ -177,11 +177,15 @@ No build step, no Node.js required — just open `index.html` in a browser.
 
 | Dashboard (Light) | Dashboard (Dark) |
 |-------------------|------------------|
-| `[screenshot]`    | `[screenshot]`   |
+| ![Dashboard-light](/resource/Dashboard-light.png)    | ![Dashboard-light](/resource/Dashboard-dark.png)   |
 
-| Analytics | Budget Management |
-|-----------|-------------------|
-| `[screenshot]` | `[screenshot]` |
+| Analytics (Light) | Analytic (Dark) |
+|-------------------|------------------|
+| ![Analytics-light](/resource/Analytics-light.png)    | ![Analytics-light](/resource/Analytics-dark.png)   |
+
+| Dashboard (Light) | Dashboard (Dark) |
+|-------------------|------------------|
+| ![Calendar-light](/resource/Calendar-light.png)    | ![Calendar-light](/resource/Calendar-dark.png)   |
 
 ---
 
