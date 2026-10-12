@@ -173,7 +173,6 @@ No build step, no Node.js required — just open `index.html` in a browser.
 
 ## 📸 Screenshots
 
-> _Add screenshots after running the app locally_
 
 | Dashboard (Light) | Dashboard (Dark) |
 |-------------------|------------------|
@@ -191,7 +190,7 @@ No build step, no Node.js required — just open `index.html` in a browser.
 
 ## 🚀 Installation
 
-NodeJS: https://nodejs.org/en/download/current
+NodeJS: https://nodejs.org/en/download/current \
 **Prerequisites:** Node.js 18+ and npm
 
 ```bash
